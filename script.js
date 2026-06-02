@@ -1,31 +1,30 @@
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
 const taskCount = document.getElementById("taskCount");
-const themeBtn = document.getElementById("themeBtn");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let currentFilter = "all";
 
-function saveTasks(){
+function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function updateCount(){
+function updateCount() {
     const active = tasks.filter(t => !t.completed).length;
     taskCount.textContent = active + " Tasks Left";
 }
 
-function renderTasks(){
+function renderTasks() {
 
     taskList.innerHTML = "";
 
     let filtered = tasks;
 
-    if(currentFilter === "active"){
+    if (currentFilter === "active") {
         filtered = tasks.filter(t => !t.completed);
     }
 
-    if(currentFilter === "completed"){
+    if (currentFilter === "completed") {
         filtered = tasks.filter(t => t.completed);
     }
 
@@ -41,8 +40,13 @@ function renderTasks(){
             </div>
 
             <div class="actions">
-                <button class="complete-btn"><i class="fa-solid fa-check"></i></button>
-                <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                <button class="complete-btn">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+                <button class="delete-btn">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
             </div>
         `;
 
@@ -64,11 +68,11 @@ function renderTasks(){
     updateCount();
 }
 
-function addTask(){
+function addTask() {
 
     const text = taskInput.value.trim();
 
-    if(!text){
+    if (!text) {
         alert("Please enter a task");
         return;
     }
@@ -85,18 +89,18 @@ function addTask(){
 }
 
 taskInput.addEventListener("keypress", (e) => {
-    if(e.key === "Enter"){
+    if (e.key === "Enter") {
         addTask();
     }
 });
 
-function clearCompleted(){
+function clearCompleted() {
     tasks = tasks.filter(t => !t.completed);
     saveTasks();
     renderTasks();
 }
 
-function filterTasks(type, btn){
+function filterTasks(type, btn) {
 
     currentFilter = type;
 
@@ -107,9 +111,5 @@ function filterTasks(type, btn){
 
     renderTasks();
 }
-
-themeBtn.onclick = () => {
-    document.body.classList.toggle("dark");
-};
 
 renderTasks();
