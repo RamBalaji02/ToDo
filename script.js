@@ -6,18 +6,15 @@ const themeBtn = document.getElementById("themeBtn");
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let currentFilter = "all";
 
-/* SAVE */
 function saveTasks(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-/* COUNT */
 function updateCount(){
     const active = tasks.filter(t => !t.completed).length;
     taskCount.textContent = active + " Tasks Left";
 }
 
-/* RENDER */
 function renderTasks(){
 
     taskList.innerHTML = "";
@@ -67,7 +64,6 @@ function renderTasks(){
     updateCount();
 }
 
-/* ADD TASK */
 function addTask(){
 
     const text = taskInput.value.trim();
@@ -88,21 +84,18 @@ function addTask(){
     renderTasks();
 }
 
-/* ENTER KEY */
 taskInput.addEventListener("keypress", (e) => {
     if(e.key === "Enter"){
         addTask();
     }
 });
 
-/* CLEAR COMPLETED */
 function clearCompleted(){
     tasks = tasks.filter(t => !t.completed);
     saveTasks();
     renderTasks();
 }
 
-/* FILTER */
 function filterTasks(type, btn){
 
     currentFilter = type;
@@ -115,10 +108,8 @@ function filterTasks(type, btn){
     renderTasks();
 }
 
-/* DARK MODE */
 themeBtn.onclick = () => {
     document.body.classList.toggle("dark");
 };
 
-/* INIT */
 renderTasks();
